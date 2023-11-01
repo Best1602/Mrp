@@ -1,4 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300&family=IBM+Plex+Sans:wght@300&family=Inter&family=Noto+Sans+Thai&display=swap');
+
 * {
   margin: 0;
   width: auto;
+  /* background-color: #fff; */
+ 
+  
+  /* font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif; */
+}
+body{
+  margin: 0;
+  width: auto;
+  /* background-color: #fff; */
+ 
+  
+  /* font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif; */
+
+}
+.centered-cell {
+  text-align: center;
+}
+.swal2-container {
+  z-index: 9999;
 }
