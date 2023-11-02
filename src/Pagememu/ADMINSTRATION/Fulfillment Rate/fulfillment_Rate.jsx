@@ -200,7 +200,7 @@ function Fulfillment_Rate() {
                                 },
                             }}
                         />
-                        <div style={{ textAlign: 'center', marginLeft: '3rem' }}> <p>บาท / ชิ้น  นน. น้อยกว่า   1 Kg</p> </div>
+                        <Box style={{ textAlign: 'center', marginLeft: '3rem' }}> บาท / ชิ้น  นน. น้อยกว่า   1 Kg </Box>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
 
@@ -218,7 +218,7 @@ function Fulfillment_Rate() {
                                 },
                             }}
                         />
-                        <div style={{ textAlign: 'center', marginLeft: '3rem' }}> <p>บาท / ชิ้น  นน. มากกว่า   1 Kg</p> </div>
+                        <Box style={{ textAlign: 'center', marginLeft: '3rem' }}>บาท / ชิ้น  นน. มากกว่า   1 Kg </Box>
                     </Box>
                 </Box>
 

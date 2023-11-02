@@ -11,21 +11,21 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/lab/Autocomplete";
+import Autocomplete from '@mui/material/Autocomplete';
 import Paper from "@mui/material/Paper";
 import Swal from 'sweetalert2';
 import CustomFilter from "./CustomerProfilesFilter";
 export default function CreateCustomer() {
     const [open, setOpen] = React.useState(false);
     const [rows, setRows] = React.useState([]);
-    console.log(rows);
     const [formData, setFormData] = React.useState({});
 
     const [selectedClientName, setSelectedClientName] = React.useState([]);
     const [selectedCountry, setSelectedCountry] = React.useState([]);
-    console.log('selectedcountry', selectedCountry);
     const [selectedTown, setSelectedTown] = React.useState([]);
     const [selectedState, setSelectedState] = React.useState([]);
+
+
     const stylesx = {
         backgroundColor: "white",
         color: "white",
@@ -246,7 +246,7 @@ export default function CreateCustomer() {
                                                 // เส้นขอบสีแดงถ้าค่าว่าง
                                             },
                                         }}
-                                        value={formData.client}
+                                        value={formData.client || ''}
                                         onChange={(e) => {
                                             setFormData({ ...formData, client: e.target.value });
                                             // Set the selected client's name
@@ -689,7 +689,7 @@ export default function CreateCustomer() {
                                             height: "55px",
                                             borderRadius: "10px",
                                         }}
-                                        value={formData.customer_group}
+                                        value={formData.customer_group || ''}
                                         onChange={(e) => {
                                             const selectedValue = e.target.value; // ค่าที่ถูกเลือกจาก Select
                                             setFormData({ ...formData, customer_group: selectedValue }); // อัปเดตค่า customer_group ใน formData
@@ -738,7 +738,7 @@ export default function CreateCustomer() {
                                             height: "55px",
                                             borderRadius: "10px",
                                         }}
-                                        value={formData.customer_category}
+                                        value={formData.customer_category || ''}
                                         onChange={(e) => {
                                             const selectedValue = e.target.value; // ค่าที่ถูกเลือกจาก Select
                                             setFormData({ ...formData, customer_category: selectedValue }); // อัปเดตค่า customer_group ใน formData
@@ -755,10 +755,10 @@ export default function CreateCustomer() {
                                             height: "55px",
                                             borderRadius: "5px",
                                         }}
-                                        value={formData.payment_term}
+                                        value={formData.payment_term || ''}
                                         onChange={(e) => {
-                                            const selectedValue = e.target.value; // ค่าที่ถูกเลือกจาก Select
-                                            setFormData({ ...formData, payment_term: selectedValue }); // อัปเดตค่า customer_group ใน formData
+                                            const selectedValue = e.target.value;
+                                            setFormData({ ...formData, payment_term: selectedValue });
                                         }}
                                     >
                                         <MenuItem value={"Cash"}>Cash</MenuItem>

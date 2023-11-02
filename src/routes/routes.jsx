@@ -28,6 +28,7 @@ import Product_item from "../Pagememu/ADMINSTRATION/Product_item/Product_item";
 
 
 export default function Routes() {
+  const [open, setOpen] = React.useState(false);
   const routes = useRoutes([
     {
       path: "/",
@@ -44,6 +45,7 @@ export default function Routes() {
     {
       path: "/Receipt-Check-In",
       element: <ReceiptCheck />,
+
     },
     {
       path: "/Purchase-Orders-Query",
@@ -75,7 +77,7 @@ export default function Routes() {
     },
     {
       path: "/Receipt-Check-Qr",
-      element: <Receipt_Qr />,
+      element: <Receipt_Qr open={open} />,
     },
     {
       path: "/Delivery-Orders-Query",

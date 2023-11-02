@@ -17,31 +17,40 @@ import FormLabel from "@mui/material/FormLabel";
 import Input from "@mui/material/Input";
 import DetailPo from "../../Operation/Inbound/Purchase_Orders_Entry/DetailPo";
 import TabProduct from "./TabProduct";
+
 function ClientProduct() {
     return (
         <Box>
             <Box
                 sx={{
                     display: "flex",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: 1,
-                    width: '100%',
-                    padding: '30px'
-
-                }}>
-
+                    flexDirection: "column",
+                    gap: 2,
+                    padding: "30px",
+                    "@media (min-width: 768px)": {
+                        flexDirection: "row",
+                    },
+                }}
+            >
                 <Paper
                     elevation={3}
                     sx={{
-                        width: '70%'
+                        width: "100%",
+                        "@media (min-width: 768px)": {
+                            width: "70%",
+                        },
                     }}
                 >
                     <Box
                         sx={{
                             display: "grid",
-                            gridTemplateColumns: "1fr 1fr",
-                            gap: 5,
+                            gridTemplateColumns: "1fr",
+                            gap: 2,
                             padding: 2,
+                            "@media (min-width: 768px)": {
+                                gridTemplateColumns: "1fr 1fr",
+                                gap: 5,
+                            },
                         }}
                     >
                         <Box
@@ -50,7 +59,7 @@ function ClientProduct() {
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: "16px",
-                                paddingLeft: "15px"
+                                padding: "15px",
                             }}
                         >
                             <InputLabel>Client</InputLabel>
@@ -58,7 +67,7 @@ function ClientProduct() {
                                 sx={{
                                     width: "100%",
                                     height: "57px",
-                                    borderRadius: '7px'
+                                    borderRadius: "7px",
                                 }}
                             >
                                 <MenuItem value={"บริษัท กกกกกกกก จำกัด"}>
@@ -71,17 +80,16 @@ function ClientProduct() {
                                     บริษัท คคคคคคคค จำกัด
                                 </MenuItem>
                             </Select>
-
-
-
                         </Box>
+
                         <Box
                             sx={{
                                 flex: 1,
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: "16px",
-                                padding: "1px"
+                                padding: "1px",
+                                marginTop: '15px'
                             }}
                         >
                             <InputLabel>Item Code</InputLabel>
@@ -91,19 +99,22 @@ function ClientProduct() {
                                 placeholder="Item Code"
                                 multiline
                                 sx={{
-                                    mr: 2, '& .MuiOutlinedInput-notchedOutline': {
-                                        borderRadius: '7px',
+                                    mr: 2,
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderRadius: "7px",
                                     },
                                 }}
                             />
                         </Box>
                     </Box>
+
+
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             gap: "16px",
-                            padding: "30px"
+                            padding: "30px",
                         }}
                     >
                         <InputLabel>Item Description</InputLabel>
@@ -111,75 +122,37 @@ function ClientProduct() {
                             sx={{
                                 width: "100%%",
                                 height: "57px",
-                                borderRadius: '7px',
+                                borderRadius: "7px",
                                 "& .MuiOutlinedInput-notchedOutline": {
-                                    borderRadius: "10px"
-                                }
+                                    borderRadius: "10px",
+                                },
                             }}
                         >
-                            <MenuItem value={"001"}>
-                                ปากกา
-                            </MenuItem>
-                            <MenuItem value={"002"}>
-                                หนังสือ
-                            </MenuItem>
-                            <MenuItem value={"003"}>
-                                หน้ากากอนามัย
-                            </MenuItem>
+                            <MenuItem value={"001"}>ปากกา</MenuItem>
+                            <MenuItem value={"002"}>หนังสือ</MenuItem>
+                            <MenuItem value={"003"}>หน้ากากอนามัย</MenuItem>
                         </Select>
                     </Box>
+
+
                 </Paper>
+
+
+
+
+
                 <Paper
                     elevation={3}
                     sx={{
-                        width: '30%'
+                        width: "100%",
+                        "@media (min-width: 768px)": {
+                            width: "30%",
+                        },
                     }}
                 >
-                    <Box
-                        sx={{ padding: 2 }}
-                    >
+                    <Box sx={{ padding: 2 }}>
                         <InputLabel>Product Price</InputLabel>
                     </Box>
-                    <Box
-                        sx={{
-                            display: "grid",
-                            // gridTemplateColumns: "1fr 1fr",
-                            gap: 5,
-                            padding: 2,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                flex: 1,
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "16px",
-                                paddingLeft: "15px"
-                            }}
-                        >
-                            <InputLabel>Discount ส่วนลด </InputLabel>
-                            <TextField
-                                id="outlined-textarea"
-                                label="Discount ส่วนลด "
-                                placeholder="Discount ส่วนลด "
-                                multiline
-                                InputProps={{
-                                    endAdornment: '%' // ส่วนนี้เพิ่มข้อความ "bath" หลัง TextField
-                                }}
-                                sx={{
-                                    mr: 2,
-                                    width: "100%",
-                                    '& .MuiOutlinedInput-notchedOutline': {
-                                        borderRadius: '7px',
-                                    },
-                                }}
-                            />
-
-                        </Box>
-
-                    </Box>
-
-
                     <Box
                         sx={{
                             display: "grid",
@@ -194,7 +167,34 @@ function ClientProduct() {
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: "16px",
-                                paddingLeft: "15px"
+                                padding: "15px",
+                            }}
+                        >
+                            <InputLabel>Discount ส่วนลด </InputLabel>
+                            <TextField
+                                id="outlined-textarea"
+                                label="Discount ส่วนลด "
+                                placeholder="Discount ส่วนลด "
+                                multiline
+                                InputProps={{
+                                    endAdornment: "%", // ส่วนนี้เพิ่มข้อความ "bath" หลัง TextField
+                                }}
+                                sx={{
+                                    mr: 2,
+                                    width: "100%",
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderRadius: "7px",
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box
+                            sx={{
+                                flex: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "16px",
+                                padding: "15px",
                             }}
                         >
                             <InputLabel>Unit Cost </InputLabel>
@@ -206,8 +206,8 @@ function ClientProduct() {
                                 sx={{
                                     mr: 2,
                                     width: "100%",
-                                    '& .MuiOutlinedInput-notchedOutline': {
-                                        borderRadius: '7px',
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderRadius: "7px",
                                     },
                                 }}
                             />
@@ -218,7 +218,7 @@ function ClientProduct() {
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: "16px",
-                                paddingLeft: "15px"
+                                padding: "15px",
                             }}
                         >
                             <InputLabel>Unit Price </InputLabel>
@@ -230,34 +230,22 @@ function ClientProduct() {
                                 sx={{
                                     mr: 2,
                                     width: "100%",
-                                    '& .MuiOutlinedInput-notchedOutline': {
-                                        borderRadius: '7px',
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderRadius: "7px",
                                     },
                                 }}
                             />
-
-
                         </Box>
-
                     </Box>
                 </Paper>
-
             </Box>
 
 
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
 
-                <Box sx={{ marginLeft: '30px', width: '100%' }}>
-                    <TabProduct />
-                </Box>
-
+            <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "30px" }}>
+                <TabProduct />
             </Box>
-
         </Box>
-
-
-
-
     );
 }
 

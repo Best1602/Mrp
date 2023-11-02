@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import CustomFilter from './CustomerProfilesFilter';
-import CreateCustomer from './CreateCustomer';
+import CreateCustomer from './CreateCustomer.jsx';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import Dialog from "@mui/material/Dialog";
@@ -17,7 +17,11 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Swal from 'sweetalert2';
 import Autocomplete from "@mui/lab/Autocomplete";
-
+import ButtonGroup from '@mui/material/ButtonGroup';
+import SendIcon from '@mui/icons-material/Send';
+import { AddBox } from '@mui/icons-material';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
 export default function DataGridDemo() {
     const [rows, setRows] = useState([]);
     const [test, setTest] = useState([]);
@@ -25,68 +29,45 @@ export default function DataGridDemo() {
     const [filterValue, setFilterValue] = useState("");
     // console.log("testrows", rows);
     const [selectValue, setSelectValue] = useState("");
-    const [formData, setFormData] = React.useState({});
+    const [formData, setFormData] = React.useState([]);
     const [statusValue, setStatusValue] = useState("");
-    const [editRowData, setEditRowData] = React.useState(null);
+    const [editRowData, setEditRowData] = React.useState({});
+
+
     const [openEditDialog, setOpenEditDialog] = useState(false);
-    const [selectedClientName, setSelectedClientName] = React.useState([]);
+    const [selectedClientName, setSelectedClientName] = React.useState("");
     const [selectedTown, setSelectedTown] = React.useState([]);
     const [selectedCountry, setSelectedCountry] = React.useState([]);
+    const [selectedState, setSelectedState] = React.useState([]);
+    const [clientNames, setClientNames] = React.useState([]);
+
     const handleSubmit = () => {
-        // if (!formData.customer_name) {
-        //     Swal.fire({
 
-        //         icon: 'error',
-        //         title: 'Validation Error',
-        //         text: 'Customer Name cannot be empty!',
-
-        //     });
-        //     return;
-        // }
-        // if (!formData.client) {
-        //     Swal.fire({
-
-        //         icon: 'error',
-        //         title: 'Validation Error',
-        //         text: 'Customer Name cannot be empty!',
-
-        //     });
-        //     return;
-        // }
-        // if (!formData.customer) {
-        //     Swal.fire({
-
-        //         icon: 'error',
-        //         title: 'Validation Error',
-        //         text: 'Customer Name cannot be empty!',
-
-        //     });
-        //     return;
-        // }
         axios
             .post(
                 "http://192.168.1.155:3000/customer-profiles/insupd_customer_master",
                 {
-                    client: formData.client,
-                    customer: formData.customer,
-                    customer_name: formData.customer_name,
-                    street: formData.street,
-                    town: formData.town,
-                    state: formData.state,
-                    country: formData.country,
-                    post_code: formData.post_code,
-                    phone: formData.phone,
-                    tax_no: formData.tax_no,
-                    fax: formData.fax,
-                    contact_person: formData.contact_person,
-                    email: formData.email,
-                    remark1: formData.remark1,
-                    irop_code: formData.irop_code,
-                    credit_value: formData.credit_value,
-                    sales_name: formData.sales_name,
-                    customer_category: formData.customer_category,
-                    customer_group: formData.customer_group,
-                    payment_term: formData.payment_term,
+                    client: editRowData.client,
+                    customer: editRowData.customer,
+                    customer_name: editRowData.customer_name,
+                    street: editRowData.street,
+                    town: editRowData.town,
+                    state: editRowData.state,
+                    country: editRowData.country,
+                    post_code: editRowData.post_code,
+                    phone: editRowData.phone,
+                    tax_no: editRowData.tax_no,
+                    fax: editRowData.fax,
+                    contact_person: editRowData.contact_person,
+                    email: editRowData.email,
+                    remark1: editRowData.remark1,
+                    irop_code: editRowData.irop_code,
+                    credit_value: editRowData.credit_value,
+                    sales_name: editRowData.sales_name,
+                    customer_category: editRowData.customer_category,
+                    customer_group: editRowData.customer_group,
+                    payment_term: editRowData.payment_term,
+
                 }
             )
             .then((response) => {
@@ -94,9 +75,13 @@ export default function DataGridDemo() {
                     icon: 'success',
                     title: 'Success',
                     text: 'API request was successful!',
+                    timer: 3000, // 3 วินาที
+                    showConfirmButton: false, // ไม่แสดงปุ่ม OK
                 });
-                console.log("API Response:", response.data);
-
+                console.log(response);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             })
             .catch((error) => {
                 Swal.fire({
@@ -105,47 +90,90 @@ export default function DataGridDemo() {
                     text: 'An error occurred while sending the API request.',
                 });
                 console.error("API Request Error:", error);
+
+                if (error.response) {
+                    console.log("API Response Data:", error.response.data); // เพื่อดูข้อมูลข้อผิดพลาดจากเซิร์ฟเวอร์
+                }
             });
     };
 
     useEffect(() => {
         axios.get('http://192.168.1.155:3000/customer-profiles/test')
             .then((response) => {
-                // สร้างค่า id ที่ไม่ซ้ำกัน
                 const rowsWithUniqueIds = response.data.map((row, index) => ({
                     ...row,
-                    id: index + 1, // หรือใช้ค่าอื่น ๆ ที่ไม่ซ้ำกัน
+                    id: index + 1,
                 }));
                 setRows(rowsWithUniqueIds);
             })
             .catch((error) => {
                 console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
             });
-    }, [editRowData]);
+    }, []);
 
     React.useEffect(() => {
-        axios.get
-            ('http://192.168.1.155:3000/clientprofile/getclientprofiles')
-
+        axios.get('http://192.168.1.155:3000/clientprofile/getclientprofiles')
             .then((response) => {
-                const rowsWithUniqueIds = response.data.map((row, index) => ({
-                    ...row,
-                    id: index + 1,
+                const clientNames = response.data.map((client) => ({
+                    value: client.client,
+                    label: client.client_name,
                 }));
-                setTest(rowsWithUniqueIds);
+                setClientNames(clientNames);
             })
             .catch((error) => {
                 console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
             });
     }, []);
     useEffect(() => {
-        // Fetch user data from your Express.js server when the component mounts
         filterRows();
-    }, []);
+    }, [filterValue]);
     useEffect(() => {
-        // กรองข้อมูลแถวเมื่อค่าตัวกรองเปลี่ยน
         filterRows();
     }, [filterValue, rows]);
+    React.useEffect(() => {
+        axios.get('http://192.168.1.155:3000/customer-profiles/reference')
+            .then((secondResponse) => {
+                const dataWithUniqueIds = secondResponse.data.map((item, index) => ({
+                    ...item,
+                    id: index + 1,
+                }));
+                setSelectedCountry(dataWithUniqueIds)
+            })
+            .catch((secondError) => {
+                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
+            });
+
+
+
+        axios.get('http://192.168.1.155:3000/customer-profiles/province')
+            .then((secondResponse) => {
+                const dataWithUniqueIds = secondResponse.data.map((item, index) => ({
+                    ...item,
+                    id: index + 1,
+                }));
+                setSelectedState(dataWithUniqueIds)
+            })
+            .catch((secondError) => {
+                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
+            });
+
+
+
+        axios.get('http://192.168.1.155:3000/customer-profiles/District')
+            .then((secondResponse) => {
+                const dataWithUniqueIds1 = secondResponse.data.map((item, index) => ({
+                    ...item,
+                    id: index + 1,
+                }));
+                setSelectedTown(dataWithUniqueIds1)
+            })
+            .catch((secondError) => {
+                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
+            });
+
+
+    }, []);
+
 
     const stylesx = {
         backgroundColor: "white",
@@ -153,10 +181,9 @@ export default function DataGridDemo() {
         // Add other styles you need
     };
     const handleFilterChange = (searchValue, selectValue, statusValue) => {
-        // เพิ่มการรับค่า statusValue
         setFilterValue(searchValue);
         setSelectValue(selectValue);
-        setStatusValue(statusValue); // ต้องรับค่า statusValue เข้ามา
+        setStatusValue(statusValue);
     };
     const filterRows = () => {
         // กรองข้อมูลแถวตามค่าตัวกรองและค่า Select และค่า Status
@@ -201,12 +228,6 @@ export default function DataGridDemo() {
         setOpenEditDialog(false);
     };
 
-    const handleField1Change = (value) => {
-        setEditRowData((prevData) => ({
-            ...prevData,
-            field1: value,
-        }));
-    };
 
 
     const uniqueTownOptions = Array.from(new Set(selectedTown.map(item => item.param_desc)))
@@ -277,7 +298,7 @@ export default function DataGridDemo() {
         {
             field: '',
             headerName: 'button',
-            width: 120,
+            width: 300,
             renderCell: (params) => {
                 const handleEditClick = () => {
                     setEditRowData(params.row);
@@ -285,15 +306,31 @@ export default function DataGridDemo() {
                 };
 
                 return (
-                    <Button
-                        variant="contained"
-                        color="success"
-                        size="small"
-                        sx={{ backgroundColor: "#2DC598" }}
-                        onClick={handleEditClick}
-                    >
-                        Edit And Add
-                    </Button>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'start' }}>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            endIcon={<ModeEditIcon />}
+                            size="small"
+                            onClick={handleEditClick}
+                            sx={{ margin: '5px' }} // ระยะห่างระหว่างปุ่ม Edit กับปุ่ม ADD
+                        >
+                            Edit
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            size="small"
+                            endIcon={<DeleteIcon />}
+                            sx={{ backgroundColor: '#e53935', margin: '5px' }} // ระยะห่างระหว่างปุ่ม DELETE กับปุ่มอื่น
+                        >
+                            DELETE
+                        </Button>
+                    </Box>
+
+
+
                 );
             },
         },
@@ -302,7 +339,7 @@ export default function DataGridDemo() {
 
     ];
     return (
-        <>
+        <div>
             <Box sx={{ display: 'flex', justifyContent: 'start' }}>
                 <Box >
                     <CreateCustomer />
@@ -320,11 +357,12 @@ export default function DataGridDemo() {
                     <DataGrid
                         sx={{ height: '85vh', padding: 4, paddingLeft: 8 }}
                         rows={filteredRows}
-                        columns={columns}
+                        columns={columns} pageSizeOptions={[5, 10, 25, 50, 100]}
                         initialState={{
                             pagination: {
                                 paginationModel: {
-                                    pageSize: 13,
+                                    pageSize: 10,
+
                                 },
                             },
                         }}
@@ -370,7 +408,7 @@ export default function DataGridDemo() {
                                             },
                                         }}
                                         disabled
-                                        value={editRowData.client}
+                                        value={editRowData.client || ''}
                                         onChange={(e) => {
                                             setRows({ ...editRowData, client: e.target.value });
                                             // Set the selected client's name
@@ -394,27 +432,30 @@ export default function DataGridDemo() {
                                     }}
                                 >
                                     <InputLabel>Client Name</InputLabel>
-                                    <TextField
+                                    <Autocomplete
+                                        options={clientNames}
+                                        getOptionLabel={(option) => option.label || ''}
                                         sx={{
+                                            width: "100%",
+                                            height: "55px",
+                                            borderRadius: "10px",
                                             "& .MuiOutlinedInput-notchedOutline": {
                                                 borderRadius: "10px",
+                                                borderColor: editRowData.client ? "initial" : "red",
                                             },
-                                            "& .MuiInputBase-input.Mui-disabled": {
-                                                WebkitTextFillColor: "#000000",
-                                            },
-                                        }} disabled
-                                        id="outlined-textarea"
-                                        label="Client"
-                                        placeholder="Client"
-                                        multiline
-                                        value={editRowData ? editRowData.client_name : ''}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value; // ค่าใหม่ที่ผู้ใช้ป้อน
-                                            setEditRowData((prevData) => ({
-                                                ...prevData,
-                                                client_name: newValue, // อัปเดตค่า client_name
-                                            }));
                                         }}
+                                        disabled
+                                        value={clientNames.find((option) => option.value === editRowData.client) || ''}
+                                        onChange={(_, newValue) => {
+                                            if (newValue) {
+                                                setEditRowData((prevData) => ({
+                                                    ...prevData,
+                                                    client: newValue.value,
+                                                    client_name: newValue.label,
+                                                }));
+                                            }
+                                        }}
+                                        renderInput={(params) => <TextField {...params} label="Client" />}
                                     />
                                 </Box>
                             </Box>
@@ -451,10 +492,10 @@ export default function DataGridDemo() {
                                         //     setFormData({ ...editRowData, customer: e.target.value });
                                         // }}
                                         onChange={(e) => {
-                                            const newValue = e.target.value; // ค่าใหม่ที่ผู้ใช้ป้อน
+
                                             setEditRowData((prevData) => ({
                                                 ...prevData,
-                                                customer: newValue, // อัปเดตค่า client_name
+                                                customer: e.target.value,
                                             }));
                                         }}
                                         multiline
@@ -480,15 +521,13 @@ export default function DataGridDemo() {
                                         id="outlined-textarea"
                                         label="Tax Number"
                                         placeholder="Tax Number"
-                                        value={editRowData.tax_no}
-                                        // onChange={(e) => {
-                                        //     setFormData({ ...editRowData, tax_no: e.target.value });
-                                        // }}
+                                        value={editRowData.tax_no || ''}
+
                                         onChange={(e) => {
-                                            const newValue = e.target.value; // ค่าใหม่ที่ผู้ใช้ป้อน
+
                                             setEditRowData((prevData) => ({
                                                 ...prevData,
-                                                tax_no: newValue, // อัปเดตค่า client_name
+                                                tax_no: e.target.value,
                                             }));
                                         }}
 
@@ -527,10 +566,10 @@ export default function DataGridDemo() {
                                         placeholder="Customer Name"
                                         value={editRowData.customer_name}
                                         onChange={(e) => {
-                                            const newValue = e.target.value; // ค่าใหม่ที่ผู้ใช้ป้อน
+
                                             setEditRowData((prevData) => ({
                                                 ...prevData,
-                                                customer_name: newValue, // อัปเดตค่า client_name
+                                                customer_name: e.target.value,
                                             }));
                                         }}
                                         disabled
@@ -560,16 +599,9 @@ export default function DataGridDemo() {
                                     multiline
                                     rows={4}
                                     value={editRowData.street}
-                                    onChange={(e) => {
-                                        const newValue = e.target.value; // ค่าใหม่ที่ผู้ใช้ป้อน
-                                        setEditRowData((prevData) => ({
-                                            ...prevData,
-                                            street: newValue, // อัปเดตค่า client_name
-                                        }));
-                                    }}
+                                    onChange={(e) => setEditRowData({ ...editRowData, street: e.target.value })}
                                 />
                             </Box>
-
                             <Box
                                 sx={{
                                     display: "grid",
@@ -589,24 +621,20 @@ export default function DataGridDemo() {
                                     }}
                                 >
                                     <InputLabel>Province</InputLabel>
-                                    <Select
-                                        sx={{
-                                            width: "100%",
-                                            height: "55px",
-                                            borderRadius: "10px",
+                                    <Autocomplete
+                                        options={selectedState}
+                                        value={selectedState.find((item) => item.param_code === editRowData.state) || null}
+                                        onChange={(event, newValue) => {
+                                            if (newValue) {
+                                                setEditRowData((prevData) => ({
+                                                    ...prevData,
+                                                    state: newValue.param_code,
+                                                }));
+                                            }
                                         }}
-                                        value={editRowData.state}
-                                        onChange={(e) => {
-                                            setFormData({ ...editRowData, state: e.target.value });
-                                            // Set the selected client's name
-                                            const selectedState = rows.find((client) => client.state === e.target.value);
-                                            setSelectedState(selectedState ? selectedState.state : "");
-                                        }}
-                                    >
-                                        <MenuItem value={"state"}>state</MenuItem>
-                                        <MenuItem value={"state"}>state</MenuItem>
-                                        <MenuItem value={"state"}>state</MenuItem>
-                                    </Select>
+                                        getOptionLabel={(option) => option.param_code || ''}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
                                 </Box>
 
                                 <Box
@@ -619,24 +647,20 @@ export default function DataGridDemo() {
                                     }}
                                 >
                                     <InputLabel>Country</InputLabel>
-                                    <Select
-                                        sx={{
-                                            width: "100%",
-                                            height: "55px",
-                                            borderRadius: "10px",
+                                    <Autocomplete
+                                        options={selectedCountry}
+                                        value={selectedCountry.find((item) => item.param_code === editRowData.country) || null}
+                                        onChange={(event, newValue) => {
+                                            if (newValue) {
+                                                setEditRowData((prevData) => ({
+                                                    ...prevData,
+                                                    country: newValue.param_code,
+                                                }));
+                                            }
                                         }}
-                                        value={editRowData.country}
-                                        onChange={(e) => {
-                                            setFormData({ ...editRowData, country: e.target.value });
-                                            // Set the selected client's name
-                                            const selectedcountry = rows.find((client) => client.country === e.target.value);
-                                            setSelectedCountry(selectedcountry ? selectedcountry.country : "");
-                                        }}
-                                    >
-                                        <MenuItem value={"Bangkok"}>Bangkok</MenuItem>
-                                        <MenuItem value={"Bangkok1"}>Bangkok1</MenuItem>
-                                        <MenuItem value={"Bangkok2"}>Bangkok2</MenuItem>
-                                    </Select>
+                                        getOptionLabel={(option) => option.param_code || ''}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
                                 </Box>
                             </Box>
 
@@ -650,15 +674,19 @@ export default function DataGridDemo() {
                                 }}
                             >
                                 <InputLabel>District</InputLabel>
+
                                 <Autocomplete
                                     options={uniqueTownOptions}
-                                    value={selectedTown.find((item) => item.param_desc === formData.town) || null}
+                                    value={selectedTown.find((item) => item.param_desc === editRowData.town) || null}
                                     onChange={(event, newValue) => {
                                         if (newValue) {
-                                            setFormData({ ...formData, town: newValue.param_desc });
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                town: newValue.param_desc,
+                                            }));
                                         }
                                     }}
-                                    getOptionLabel={(option) => option.param_desc}
+                                    getOptionLabel={(option) => option.param_desc || ''}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </Box>
@@ -693,7 +721,11 @@ export default function DataGridDemo() {
                                         placeholder="Postal Code"
                                         value={editRowData.post_code}
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, post_code: e.target.value });
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                post_code: e.target.value,
+                                            }));
                                         }}
                                         multiline
                                     />
@@ -709,7 +741,11 @@ export default function DataGridDemo() {
                                         placeholder="Telephone Number"
                                         value={editRowData.phone}
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, phone: e.target.value });
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                phone: e.target.value,
+                                            }));
                                         }}
                                         multiline
                                     />
@@ -734,9 +770,13 @@ export default function DataGridDemo() {
                                         id="outlined-textarea"
                                         label="Fax Number"
                                         placeholder="Fax Number"
-                                        value={editRowData.fax}
+                                        value={editRowData.fax || " "}
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, fax: e.target.value });
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                fax: e.target.value,
+                                            }));
                                         }}
                                         multiline
                                     />
@@ -750,9 +790,13 @@ export default function DataGridDemo() {
                                         id="outlined-textarea"
                                         label="Contact Person"
                                         placeholder="Contact Person"
-                                        value={editRowData.contact_person}
+                                        value={editRowData.contact_person || " "}
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, contact_person: e.target.value });
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                contact_person: e.target.value,
+                                            }));
                                         }}
                                         multiline
                                     />
@@ -777,9 +821,13 @@ export default function DataGridDemo() {
                                     }}
                                     label="Email"
                                     id="outlined-multiline-static"
-                                    value={editRowData.email}
+                                    value={editRowData.email || ""}
                                     onChange={(e) => {
-                                        setFormData({ ...editRowData, email: e.target.value });
+
+                                        setEditRowData((prevData) => ({
+                                            ...prevData,
+                                            email: e.target.value,
+                                        }));
                                     }}
                                 />
                                 <InputLabel>Remark</InputLabel>
@@ -793,8 +841,13 @@ export default function DataGridDemo() {
                                     id="outlined-multiline-static"
                                     value={editRowData.remark1}
                                     onChange={(e) => {
-                                        setFormData({ ...editRowData, remark1: e.target.value });
+
+                                        setEditRowData((prevData) => ({
+                                            ...prevData,
+                                            remark1: e.target.value,
+                                        }));
                                     }}
+
                                 />
                             </Box>
 
@@ -829,7 +882,11 @@ export default function DataGridDemo() {
                                         placeholder="Irop code"
                                         value={editRowData.irop_code}
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, irop_code: e.target.value });
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                irop_code: e.target.value,
+                                            }));
                                         }}
                                         multiline
                                     />
@@ -843,9 +900,13 @@ export default function DataGridDemo() {
                                         id="outlined-textarea"
                                         label="Sale Name"
                                         placeholder="Sale Name"
-                                        value={editRowData.sales_name}
+                                        value={editRowData.sales_name || ''}
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, sales_name: e.target.value });
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                sales_name: e.target.value,
+                                            }));
                                         }}
                                         multiline
                                     />
@@ -856,9 +917,14 @@ export default function DataGridDemo() {
                                             height: "55px",
                                             borderRadius: "10px",
                                         }}
-                                        value={editRowData.customer_group}
+
+                                        value={editRowData.customer_group || ''} // Set the initial value from editRowData
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, customer_group: e.target.value });
+                                            const selectedValue = e.target.value;
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                customer_group: selectedValue, // Update the value in editRowData
+                                            }));
                                         }}
                                     >
                                         <MenuItem value={"Agent"}>Agent</MenuItem>
@@ -886,12 +952,13 @@ export default function DataGridDemo() {
                                         placeholder="Credit Value"
                                         value={editRowData.credit_value}
                                         onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            // ใช้ regular expression เช็คว่ามีแต่ตัวเลขหรือไม่
-                                            if (/^\d*$/.test(newValue)) {
-                                                setFormData({ ...formData, credit_value: newValue });
-                                            }
+
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                credit_value: e.target.value,
+                                            }));
                                         }}
+
                                         multiline
                                     />
                                     <InputLabel>Customer Category</InputLabel>
@@ -901,9 +968,13 @@ export default function DataGridDemo() {
                                             height: "55px",
                                             borderRadius: "10px",
                                         }}
-                                        value={editRowData.customer_category}
+                                        value={editRowData.customer_category || ''} // Set the initial value from editRowData
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, customer_category: e.target.value });
+                                            const selectedValue = e.target.value;
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                customer_category: selectedValue, // Update the value in editRowData
+                                            }));
                                         }}
                                     >
                                         <MenuItem value={"Hotel"}>Hotel</MenuItem>
@@ -917,9 +988,14 @@ export default function DataGridDemo() {
                                             height: "55px",
                                             borderRadius: "5px",
                                         }}
-                                        value={editRowData.payment_term}
+
+                                        value={editRowData.payment_term || ''} // Set the initial value from editRowData
                                         onChange={(e) => {
-                                            setFormData({ ...editRowData, payment_term: e.target.value });
+                                            const selectedValue = e.target.value;
+                                            setEditRowData((prevData) => ({
+                                                ...prevData,
+                                                payment_term: selectedValue, // Update the value in editRowData
+                                            }));
                                         }}
                                     >
                                         <MenuItem value={"Cash"}>Cash</MenuItem>
@@ -940,6 +1016,6 @@ export default function DataGridDemo() {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </div>
     );
 }

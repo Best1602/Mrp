@@ -16,8 +16,8 @@ function Parameter() {
                     placeholder="Lot Number"
                     multiline
                     sx={{
-                        mr: 2,
                         width: '100%',
+                        marginRight: 2,
                         '& .MuiOutlinedInput-notchedOutline': {
                             borderRadius: '7px',
                         },
@@ -32,8 +32,7 @@ function Parameter() {
 
                     sx={{
                         width: "100%",
-                        mr: 2,
-
+                        marginRight: 2,
                         '& .MuiOutlinedInput-notchedOutline': {
                             borderRadius: '7px',
                             width: '100%',
@@ -45,10 +44,10 @@ function Parameter() {
             <Grid item xs={12} sm={6} md={4}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
-                        label="Mfg Date" sx={{
+                        label="Mfg Date"
+                        sx={{
                             width: "100%",
                             mr: 2,
-                            width: '100%',
                             '& .MuiOutlinedInput-notchedOutline': {
                                 borderRadius: '7px',
                             },

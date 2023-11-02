@@ -19,245 +19,297 @@ import Checkbox from '@mui/material/Checkbox';
 import { DataGrid } from "@mui/x-data-grid";
 import TableAssigned from "./TableAssigned";
 import TablePacking from "./TablePacking";
-
+import { useMediaQuery } from "@mui/material";
 
 
 
 
 function Mandatory() {
 
-
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
 
     return (
         <Box>
-
-
-
-            <>
-                <br />
-            </>
-            <Paper
-                elevation={3}
+            <Box
                 sx={{
                     display: "flex",
-                    flexDirection: "row",
-                    gap: "16px",
-                    padding: 4,
-                    width: '97%'
+                    flexDirection: "column",
+                    gap: 2,
+
+                    "@media (min-width: 768px)": {
+                        flexDirection: "row",
+
+                    },
                 }}
             >
 
-                <Box
+                <Paper
+                    elevation={3}
                     sx={{
-                        flex: 1,
                         display: "flex",
                         flexDirection: "column",
                         gap: "16px",
+                        padding: 4,
+                        width: '97%',
+                        "@media (min-width: 768px)": {
+                            flexDirection: "row",
+                            // width: '80vh',
+                        },
                     }}
                 >
-                    <InputLabel sx={{ fontSize: '28px', marginTop: '1rem', color: '#003864', fontWeight: 600 }}>Mandatory Product Definition</InputLabel>
-                    <InputLabel>Product Class</InputLabel>
-                    <Select
-                        sx={{
-                            width: "100%",
-                            height: "55px",
-                            borderRadius: '7px'
-                        }}
-                        defaultValue={"001"}
-                    >
-                        <MenuItem value={"001"}>
-                            ASSEMBLY
-                        </MenuItem>
-                        <MenuItem value={"002"}>
-                            COMPONENT
-                        </MenuItem>
-                        <MenuItem value={"บริษัท นนนนนนน จำกัด"}>
-                            บริษัท คคคคคคคค จำกัด
-                        </MenuItem>
-                    </Select>
-
-                    <InputLabel>Gross Weight</InputLabel>
-                    <Select
-                        sx={{
-                            width: "100%",
-                            height: "55px",
-                            borderRadius: '7px'
-                        }}
-                    >
-                        <MenuItem value={"001"}>001</MenuItem>
-                        <MenuItem value={"002"}>002</MenuItem>
-                        <MenuItem value={"003"}>003</MenuItem>
-                    </Select>
-                    <InputLabel>Net Weight (Unit)</InputLabel>
-                    <TextField
-
-                        id="outlined-textarea"
-                        label="Net Weight (Unit)"
-                        placeholder="Net Weight (Unit)"
-                        multiline
-                        sx={{
-                            mr: 2,
-                            width: "100%",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderRadius: '7px',
-                            },
-                        }}
-                    />
-                    <InputLabel>Height</InputLabel>
-                    <TextField
-
-                        id="outlined-textarea"
-                        label="Height"
-                        placeholder="Height"
-                        multiline
-                        sx={{
-                            mr: 2,
-                            width: "100%",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderRadius: '7px',
-                            },
-                        }}
-                    />
 
                     <Box
                         sx={{
                             flex: 1,
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             gap: "16px",
+
                         }}
                     >
-                        <FormControlLabel
-                            control={<Checkbox sx={{ height: '55px' }} />}
-                            label="Bonded Product"
+                        <InputLabel sx={{
+                            // fontSize: '28px',
+                            marginTop: '1rem',
+                            color: '#003864',
+                            fontWeight: 600,
+                            fontSize: isSmallScreen ? "10px" : "20px",
+                        }}>Mandatory Product Definition</InputLabel>
+                        <InputLabel>Product Class</InputLabel>
+                        <Select
+                            sx={{
+                                width: "100%",
+                                height: "55px",
+                                borderRadius: '7px',
+                                "@media (min-width: 768px)": {
+                                    flexDirection: "row",
+                                },
+                            }}
+                            defaultValue={"001"}
+                        >
+                            <MenuItem value={"001"}>
+                                ASSEMBLY
+                            </MenuItem>
+                            <MenuItem value={"002"}>
+                                COMPONENT
+                            </MenuItem>
+                            <MenuItem value={"บริษัท นนนนนนน จำกัด"}>
+                                บริษัท คคคคคคคค จำกัด
+                            </MenuItem>
+                        </Select>
+
+                        <InputLabel>Gross Weight</InputLabel>
+                        <Select
+                            sx={{
+                                width: "100%",
+                                height: "55px",
+                                borderRadius: '7px',
+                                "@media (min-width: 768px)": {
+                                    flexDirection: "row",
+                                },
+                            }}
+                        >
+                            <MenuItem value={"001"}>001</MenuItem>
+                            <MenuItem value={"002"}>002</MenuItem>
+                            <MenuItem value={"003"}>003</MenuItem>
+                        </Select>
+                        <InputLabel>Net Weight (Unit)</InputLabel>
+                        <TextField
+
+                            id="outlined-textarea"
+                            label="Net Weight (Unit)"
+                            placeholder="Net Weight (Unit)"
+                            multiline
+                            sx={{
+                                mr: 2,
+                                width: "100%",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    borderRadius: '7px',
+                                },
+                            }}
                         />
-                        <FormControlLabel
-                            control={<Checkbox sx={{ height: '55px' }} />}
-                            label="Auto zoning"
+                        <InputLabel>Height</InputLabel>
+                        <TextField
+
+                            id="outlined-textarea"
+                            label="Height"
+                            placeholder="Height"
+                            multiline
+                            sx={{
+                                mr: 2,
+                                width: "100%",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    borderRadius: '7px',
+                                },
+                            }}
                         />
+
+                        <Box
+                            sx={{
+                                flex: 1,
+                                display: "flex",
+                                flexDirection: "row",
+                                gap: "16px",
+                                "@media (min-width: 768px)": {
+                                    flexDirection: "row",
+                                },
+                            }}
+                        >
+                            <FormControlLabel
+                                control={<Checkbox sx={{ height: '55px' }} />}
+                                label="Bonded Product"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox sx={{ height: '55px' }} />}
+                                label="Auto zoning"
+                            />
+                        </Box>
                     </Box>
-                </Box>
-                <Box
-                    sx={{
-                        flex: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "16px"
-                        , marginTop: '4.5rem'
-                    }}
-                >
-                    <InputLabel>Alternate Code</InputLabel>
-                    <Select
+                    <Box
                         sx={{
-                            width: "100%",
-                            height: "55px",
-                            borderRadius: '7px'
-                        }}
-                    >
-                        <MenuItem value={"001"}>001</MenuItem>
-                        <MenuItem value={"002"}>002</MenuItem>
-                        <MenuItem value={"003"}>003</MenuItem>
-                    </Select>
-                    <InputLabel>Category</InputLabel>
-                    <Select
-                        sx={{
-                            width: "100%",
-                            height: "55px",
-                            borderRadius: '7px'
-                        }}
-                    >
-                        <MenuItem value={"001"}>001</MenuItem>
-                        <MenuItem value={"002"}>002</MenuItem>
-                        <MenuItem value={"003"}>003</MenuItem>
-                    </Select>
-                    <InputLabel>Nesting Factor</InputLabel>
-                    <TextField
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "16px"
+                            , marginTop: '3.8rem',
 
-                        id="outlined-textarea"
-                        label="Nesting Factor"
-                        placeholder="Nesting Factor"
-                        multiline
-                        sx={{
-                            mr: 2,
-                            width: "100%",
-                            '& .MuiOutlinedInput-notchedOutline': {
+
+                        }}
+                    >
+                        <InputLabel>Alternate Code</InputLabel>
+                        <Select
+                            sx={{
+                                width: "100%",
+                                height: "55px",
                                 borderRadius: '7px',
-                            },
-                        }}
-                    />
 
-                </Box>
-                <Box
-                    sx={{
-                        flex: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "16px",
-                        marginTop: '4.5rem'
-                    }}
-                >
-                    <InputLabel>Product Status</InputLabel>
-                    <Select
+                            }}
+                        >
+                            <MenuItem value={"001"}>001</MenuItem>
+                            <MenuItem value={"002"}>002</MenuItem>
+                            <MenuItem value={"003"}>003</MenuItem>
+                        </Select>
+                        <InputLabel>Category</InputLabel>
+                        <Select
+                            sx={{
+                                width: "100%",
+                                height: "55px",
+                                borderRadius: '7px'
+                            }}
+                        >
+                            <MenuItem value={"001"}>001</MenuItem>
+                            <MenuItem value={"002"}>002</MenuItem>
+                            <MenuItem value={"003"}>003</MenuItem>
+                        </Select>
+                        <InputLabel>Nesting Factor</InputLabel>
+                        <TextField
+
+                            id="outlined-textarea"
+                            label="Nesting Factor"
+                            placeholder="Nesting Factor"
+                            multiline
+                            sx={{
+                                mr: 2,
+                                width: "100%",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    borderRadius: '7px',
+                                },
+                            }}
+                        />
+
+                    </Box>
+                    <Box
                         sx={{
-                            width: "100%",
-                            height: "55px",
-                            borderRadius: '7px'
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "16px",
+                            marginTop: '3.8rem'
                         }}
-                        defaultValue={"001"}
                     >
-                        <MenuItem value={"001"}>ACTIVE</MenuItem>
-                        <MenuItem value={"002"}>BLOCK ALL</MenuItem>
-                        <MenuItem value={"003"}>IN ACTIVE</MenuItem>
-                        <MenuItem value={"004"}>OBSOLETE</MenuItem>
-                        <MenuItem value={"005"}>QC BLOCK</MenuItem>
-                    </Select>
-                    <InputLabel>Receipt Grade</InputLabel>
-                    <Select
-                        sx={{
-                            width: "100%",
-                            height: "55px",
-                            borderRadius: '7px'
-                        }}
-                    >
-                        <MenuItem value={"001"}>คืออะไรผมไม่รู้</MenuItem>
-                        <MenuItem value={"002"}>คืออะไรผมไม่รู้</MenuItem>
-                        <MenuItem value={"003"}>คืออะไรผมไม่รู้</MenuItem>
-                    </Select>
-                    <InputLabel>Tile</InputLabel>
-                    <TextField
+                        <InputLabel>Product Status</InputLabel>
+                        <Select
+                            sx={{
+                                width: "100%",
+                                height: "55px",
+                                borderRadius: '7px'
+                            }}
+                            defaultValue={"001"}
+                        >
+                            <MenuItem value={"001"}>ACTIVE</MenuItem>
+                            <MenuItem value={"002"}>BLOCK ALL</MenuItem>
+                            <MenuItem value={"003"}>IN ACTIVE</MenuItem>
+                            <MenuItem value={"004"}>OBSOLETE</MenuItem>
+                            <MenuItem value={"005"}>QC BLOCK</MenuItem>
+                        </Select>
+                        <InputLabel>Receipt Grade</InputLabel>
+                        <Select
+                            sx={{
+                                width: "100%",
+                                height: "55px",
+                                borderRadius: '7px'
+                            }}
+                        >
+                            <MenuItem value={"001"}>คืออะไรผมไม่รู้</MenuItem>
+                            <MenuItem value={"002"}>คืออะไรผมไม่รู้</MenuItem>
+                            <MenuItem value={"003"}>คืออะไรผมไม่รู้</MenuItem>
+                        </Select>
+                        <InputLabel>Tile</InputLabel>
+                        <TextField
 
-                        id="outlined-textarea"
-                        label="Tile"
-                        placeholder="Tile"
-                        multiline
-                        sx={{
-                            mr: 2,
-                            width: "100%",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderRadius: '7px',
-                            },
-                        }}
-                    />
+                            id="outlined-textarea"
+                            label="Tile"
+                            placeholder="Tile"
+                            multiline
+                            sx={{
+                                mr: 2,
+                                width: "100%",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    borderRadius: '7px',
+                                },
+                            }}
+                        />
 
-                </Box>
+                    </Box>
 
-            </Paper >
+                </Paper >
+            </Box >
 
-            <Box sx={{ display: "flex", gap: "20px", flexDirection: "row" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    paddingTop: "20px",
+                    marginRight: '30px',
+                    "@media (min-width: 768px)": {
+                        flexDirection: "row",
+                    },
+                }}
+            >
 
                 <Paper
 
                     elevation={6}
+
                     sx={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: "20px",
-                        marginTop: 2.5,
-                        width: "78%",
+                        gap: "16px",
+                        padding: 4,
+                        width: '82%',
+
                     }}
+
                 >
-                    <InputLabel sx={{ fontSize: '28px', marginTop: '1rem', color: '#003864', fontWeight: 600, padding: '15px' }}>Stock Control Parameters</InputLabel>
+                    <InputLabel sx={{
+
+                        marginTop: '-1rem',
+                        color: '#003864',
+                        fontWeight: 600,
+                        padding: '15px',
+                        fontSize: isSmallScreen ? "10px" : "20px",
+                    }}>Stock Control Parameters</InputLabel>
                     <Box
                         sx={{
                             display: "grid",
@@ -316,8 +368,6 @@ function Mandatory() {
 
                         <Box sx={{ display: "flex", flexDirection: "column", marginTop: '30px' }}>
 
-
-
                             <FormControlLabel
                                 control={<Checkbox sx={{ height: '55px' }} />}
                                 label="Dimension"
@@ -358,9 +408,12 @@ function Mandatory() {
 
                     </Box>
                 </Paper>
+
                 <TableAssigned />
 
             </Box>
+
+
 
 
             <Box sx={{ p: -1 }}>
@@ -368,6 +421,7 @@ function Mandatory() {
                 <TablePacking />
 
             </Box>
+
 
 
         </Box >

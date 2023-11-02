@@ -3,6 +3,8 @@ import Header_Qr from './HeaderQr'
 import TableReceiptlist from './TableReceiptlist_Qr'
 import Box from "@mui/material/Box";
 function Receipt_Qr() {
+
+
     return (
         <Box
             style={{
