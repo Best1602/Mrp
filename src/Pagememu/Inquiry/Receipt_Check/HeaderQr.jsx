@@ -56,6 +56,7 @@ function HeaderQry() {
                             height: "57px",
                             borderRadius: "7px"
                         }}
+                        defaultValue={"001"}
                     >
                         <MenuItem value={"001"}>
                             001
@@ -74,6 +75,7 @@ function HeaderQry() {
                             height: "57px",
                             borderRadius: "7px"
                         }}
+                        value={"001"}
                     >
                         <MenuItem value={"001"}>
                             001
@@ -105,8 +107,9 @@ function HeaderQry() {
                             height: "57px",
                             borderRadius: "7px"
                         }}
+                        value={"001"}
                     >
-                        <MenuItem value={"บริษัท กกกกกกกก จำกัด"}>
+                        <MenuItem value={"001"}>
                             บริษัท กกกกกกกก จำกัด
                         </MenuItem>
                         <MenuItem value={"บริษัท ขขขขขขขข จำกัด"}>
@@ -123,8 +126,9 @@ function HeaderQry() {
                             height: "57px",
                             borderRadius: "7px"
                         }}
+                        value={"001"}
                     >
-                        <MenuItem value={"บริษัท กกกกกกกก จำกัด"}>
+                        <MenuItem value={"001"}>
                             บริษัท กกกกกกกก จำกัด
                         </MenuItem>
                         <MenuItem value={"บริษัท ขขขขขขขข จำกัด"}>
@@ -188,8 +192,9 @@ function HeaderQry() {
                             height: "57px",
                             borderRadius: "7px"
                         }}
+                        value={"001"}
                     >
-                        <MenuItem value={"All"}>
+                        <MenuItem value={"001"}>
                             All
                         </MenuItem>
                         <MenuItem value={"บริษัท ขขขขขขขข จำกัด"}>

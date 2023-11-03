@@ -19,14 +19,14 @@ const columns = [
         headerName: "First name",
         width: 150,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "lastName",
         headerName: "Last name",
         width: 150,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "age",
@@ -34,14 +34,14 @@ const columns = [
         type: "number",
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "fullName",
         headerName: "Full name",
         description: "This column has a value getter and is not sortable.",
         sortable: false,
-        resizable: true,
+        // resizable: true,
         width: 160,
         valueGetter: (params) =>
             `${params.row.firstName || ""} ${params.row.lastName || ""}`,
@@ -183,11 +183,12 @@ function DetailPo() {
                             //value={age}
                             label="UOM"
                             sx={{ borderRadius: '7px' }}
+                            value={"001"}
                         //onChange={handleChange}
                         >
-                            <MenuItem value={10}>PCS</MenuItem>
-                            <MenuItem value={20}>BOX</MenuItem>
-                            <MenuItem value={30}>PALLET</MenuItem>
+                            <MenuItem value={"001"}>PCS</MenuItem>
+                            <MenuItem value={"20"}>BOX</MenuItem>
+                            <MenuItem value={"30"}>PALLET</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField

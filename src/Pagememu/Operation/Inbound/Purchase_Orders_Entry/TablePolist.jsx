@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
@@ -10,7 +10,7 @@ const columns = [
     field: "Client",
     headerName: "Client",
     width: 110,
-    headerClassName: "custom-header",
+
 
   },
   {
@@ -18,7 +18,7 @@ const columns = [
     headerName: "Order No",
     width: 150,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Document Ref",
@@ -26,61 +26,61 @@ const columns = [
     width: 150,
 
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Invoice No",
     headerName: "Invoice No",
     width: 150,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Status",
     headerName: "Status",
     width: 150,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Create Date",
     headerName: "Create Date",
     width: 150,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Supplier",
     headerName: "Supplier",
     width: 150,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Supplier Name",
     headerName: "Supplier Name",
     width: 200,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Shipment No",
     headerName: "Shipment No",
     width: 150,
 
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Payment Term",
     headerName: "Payment Term",
     width: 150,
-    resizable: true,
+    // resizable: true,
   },
   {
     field: "Vat",
     headerName: "Vat",
     width: 150,
-    resizable: true,
+    // resizable: true,
 
   },
 

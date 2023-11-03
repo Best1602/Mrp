@@ -6,6 +6,8 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 
 
 import { DataGrid } from "@mui/x-data-grid";
@@ -163,21 +165,23 @@ function TablePacking() {
                 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
                         <InputLabel>Packaging</InputLabel>
-                        <Select
-                            sx={{
-                                width: "9vw",
-                                height: "55px",
-                                borderRadius: '7px',
-                                marginTop: '12px'
-                            }}
-                            defaultValue={"001"}
-                        >
-                            <MenuItem value={"001"}>PALLET</MenuItem>
-                            <MenuItem value={"002"}>BOX</MenuItem>
-                            <MenuItem value={"003"}>CARTON</MenuItem>
-                            <MenuItem value={"004"}>PCS</MenuItem>
+                        <FormControl fullWidth>
+                            <Select
+                                sx={{
+                                    width: "9vw",
+                                    height: "55px",
+                                    borderRadius: '7px',
+                                    marginTop: '12px'
+                                }}
+                                defaultValue={"001"}
+                            >
+                                <MenuItem value={"001"}>PALLET</MenuItem>
+                                <MenuItem value={"002"}>BOX</MenuItem>
+                                <MenuItem value={"003"}>CARTON</MenuItem>
+                                <MenuItem value={"004"}>PCS</MenuItem>
 
-                        </Select>
+                            </Select>
+                        </FormControl>
 
                     </Box>
 
@@ -208,21 +212,23 @@ function TablePacking() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <InputLabel>UOM</InputLabel>
-                        <Select
-                            sx={{
-                                width: "9vw",
-                                height: "55px",
-                                borderRadius: '7px',
-                                marginTop: '12px'
-                            }}
-                            defaultValue={"004"}
-                        >
-                            <MenuItem value={"001"}>PALLET</MenuItem>
-                            <MenuItem value={"002"}>BOX</MenuItem>
-                            <MenuItem value={"003"}>CARTON</MenuItem>
-                            <MenuItem value={"004"}>PCS</MenuItem>
+                        <FormControl fullWidth>
+                            <Select
+                                sx={{
+                                    width: "9vw",
+                                    height: "55px",
+                                    borderRadius: '7px',
+                                    marginTop: '12px'
+                                }}
+                                defaultValue={"004"}
+                            >
+                                <MenuItem value={"001"}>PALLET</MenuItem>
+                                <MenuItem value={"002"}>BOX</MenuItem>
+                                <MenuItem value={"003"}>CARTON</MenuItem>
+                                <MenuItem value={"004"}>PCS</MenuItem>
 
-                        </Select>
+                            </Select>
+                        </FormControl>
 
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>

@@ -16,7 +16,7 @@ function ClientProfile() {
 
 
 
-            <Box sx={{ marginTop: -5, }}>
+            <Box sx={{ marginTop: -12, }}>
                 <CreateClient />
                 <TableCileProfile />
 

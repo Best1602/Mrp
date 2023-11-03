@@ -29,3 +29,8 @@ body{
 .swal2-container {
   z-index: 9999;
 }
+.custom-datagrid .MuiDataGrid-cell {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

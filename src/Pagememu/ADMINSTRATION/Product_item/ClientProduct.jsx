@@ -19,6 +19,11 @@ import DetailPo from "../../Operation/Inbound/Purchase_Orders_Entry/DetailPo";
 import TabProduct from "./TabProduct";
 
 function ClientProduct() {
+    const [uomLooseValue, setUomLooseValue] = React.useState("");
+
+
+
+
     return (
         <Box>
             <Box
@@ -104,6 +109,8 @@ function ClientProduct() {
                                         borderRadius: "7px",
                                     },
                                 }}
+                                value={uomLooseValue}
+                                onChange={(e) => setUomLooseValue(e.target.value)}
                             />
                         </Box>
                     </Box>

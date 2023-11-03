@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -134,66 +134,51 @@ export default function CreateCustomer() {
                 console.error("API Request Error:", error);
             });
     };
-    React.useEffect(() => {
-        axios.get
-            ('http://192.168.1.155:3000/clientprofile/getclientprofiles')
 
-            .then((response) => {
-                const rowsWithUniqueIds = response.data.map((row, index) => ({
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const [response1, response2, response3, response4] = await Promise.all([
+                    axios.get("http://192.168.1.155:3000/clientprofile/getclientprofiles"),
+                    axios.get("http://192.168.1.155:3000/customer-profiles/reference"),
+                    axios.get("http://192.168.1.155:3000/customer-profiles/province"),
+                    axios.get("http://192.168.1.155:3000/customer-profiles/District"),
+                ]);
+
+                const rowsWithUniqueIds = response1.data.map((row, index) => ({
                     ...row,
                     id: index + 1,
                 }));
                 setRows(rowsWithUniqueIds);
-            })
-            .catch((error) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
-            });
-    }, []);
-    React.useEffect(() => {
-        axios.get('http://192.168.1.155:3000/customer-profiles/reference')
-            .then((secondResponse) => {
-                const dataWithUniqueIds = secondResponse.data.map((item, index) => ({
+
+                const dataWithUniqueIds2 = response2.data.map((item, index) => ({
                     ...item,
                     id: index + 1,
                 }));
-                setSelectedCountry(dataWithUniqueIds)
-            })
-            .catch((secondError) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
-            });
+                setSelectedCountry(dataWithUniqueIds2);
 
-
-    }, []);
-    React.useEffect(() => {
-        axios.get('http://192.168.1.155:3000/customer-profiles/province')
-            .then((secondResponse) => {
-                const dataWithUniqueIds = secondResponse.data.map((item, index) => ({
+                const dataWithUniqueIds3 = response3.data.map((item, index) => ({
                     ...item,
                     id: index + 1,
                 }));
-                setSelectedState(dataWithUniqueIds)
-            })
-            .catch((secondError) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
-            });
+                setSelectedState(dataWithUniqueIds3);
 
-
-    }, []);
-    React.useEffect(() => {
-        axios.get('http://192.168.1.155:3000/customer-profiles/District')
-            .then((secondResponse) => {
-                const dataWithUniqueIds1 = secondResponse.data.map((item, index) => ({
+                const dataWithUniqueIds4 = response4.data.map((item, index) => ({
                     ...item,
                     id: index + 1,
                 }));
-                setSelectedTown(dataWithUniqueIds1)
-            })
-            .catch((secondError) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
-            });
+                setSelectedTown(dataWithUniqueIds4);
 
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+            }
+        };
 
-    }, []);
+        fetchData();
+    },
+        []);
     const uniqueTownOptions = Array.from(new Set(selectedTown.map(item => item.param_desc)))
         .map(param_desc => selectedTown.find(item => item.param_desc === param_desc));
     return (

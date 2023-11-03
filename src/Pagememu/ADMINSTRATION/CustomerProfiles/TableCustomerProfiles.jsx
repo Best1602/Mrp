@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import CustomFilter from './CustomerProfilesFilter';
-import CreateCustomer from './CreateCustomer.jsx';
+import CreateCustomer from './CreateCustomer';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import Dialog from "@mui/material/Dialog";
@@ -16,7 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Swal from 'sweetalert2';
-import Autocomplete from "@mui/lab/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import SendIcon from '@mui/icons-material/Send';
 import { AddBox } from '@mui/icons-material';
@@ -27,19 +27,45 @@ export default function DataGridDemo() {
     const [test, setTest] = useState([]);
     const [filteredRows, setFilteredRows] = useState([]);
     const [filterValue, setFilterValue] = useState("");
-    // console.log("testrows", rows);
     const [selectValue, setSelectValue] = useState("");
     const [formData, setFormData] = React.useState([]);
     const [statusValue, setStatusValue] = useState("");
     const [editRowData, setEditRowData] = React.useState({});
-
-
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [selectedClientName, setSelectedClientName] = React.useState("");
     const [selectedTown, setSelectedTown] = React.useState([]);
     const [selectedCountry, setSelectedCountry] = React.useState([]);
     const [selectedState, setSelectedState] = React.useState([]);
     const [clientNames, setClientNames] = React.useState([]);
+
+
+
+
+    const handleDelete = () => {
+
+        axios
+            .delete(
+                // "http://192.168.1.155:3000/customer-profiles/insupd_customer_master",
+                {
+
+
+                }
+            )
+            .then((response) => {
+
+                console.log(response);
+                setOpenEditDialog(false);
+            })
+            .catch((error) => {
+
+                if (error.response) {
+                    console.log("API Response Data:", error.response.data); // เพื่อดูข้อมูลข้อผิดพลาดจากเซิร์ฟเวอร์
+                }
+            });
+    };
+
+
+
 
     const handleSubmit = () => {
 
@@ -75,13 +101,11 @@ export default function DataGridDemo() {
                     icon: 'success',
                     title: 'Success',
                     text: 'API request was successful!',
-                    timer: 3000, // 3 วินาที
-                    showConfirmButton: false, // ไม่แสดงปุ่ม OK
+                    timer: 1500,
+                    showConfirmButton: false,
                 });
                 console.log(response);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
+                setOpenEditDialog(false);
             })
             .catch((error) => {
                 Swal.fire({
@@ -97,94 +121,74 @@ export default function DataGridDemo() {
             });
     };
 
+
     useEffect(() => {
-        axios.get('http://192.168.1.155:3000/customer-profiles/test')
-            .then((response) => {
-                const rowsWithUniqueIds = response.data.map((row, index) => ({
+
+        filterRows();
+
+        const fetchData = async () => {
+            try {
+                const response1 = await axios.get(`http://192.168.1.155:3000/customer-profiles/test`);
+                const response2 = await axios.get('http://192.168.1.155:3000/clientprofile/getclientprofiles');
+                // const response3 = await axios.get('http://192.168.1.155:3000/customer-profiles/reference');
+                // const response4 = await axios.get('http://192.168.1.155:3000/customer-profiles/province');
+                // const response5 = await axios.get('http://192.168.1.155:3000/customer-profiles/District');
+
+                const rowsWithUniqueIds = response1.data.map((row, index) => ({
                     ...row,
                     id: index + 1,
+
+
                 }));
                 setRows(rowsWithUniqueIds);
-            })
-            .catch((error) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
-            });
-    }, []);
+                setTest(rowsWithUniqueIds);
 
-    React.useEffect(() => {
-        axios.get('http://192.168.1.155:3000/clientprofile/getclientprofiles')
-            .then((response) => {
-                const clientNames = response.data.map((client) => ({
+                const clientNames = response2.data.map((client) => ({
                     value: client.client,
                     label: client.client_name,
                 }));
                 setClientNames(clientNames);
-            })
-            .catch((error) => {
+
+                // const dataWithUniqueIds3 = response3.data.map((item, index) => ({
+                //     ...item,
+                //     id: index + 1,
+                // }));
+                // setSelectedCountry(dataWithUniqueIds3);
+
+                // const dataWithUniqueIds4 = response4.data.map((item, index) => ({
+                //     ...item,
+                //     id: index + 1,
+                // }));
+                // setSelectedState(dataWithUniqueIds4);
+
+                // const dataWithUniqueIds5 = response5.data.map((item, index) => ({
+                //     ...item,
+                //     id: index + 1,
+                // }));
+                // setSelectedTown(dataWithUniqueIds5);
+
+                filterRows();
+
+            } catch (error) {
                 console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
-            });
-    }, []);
-    useEffect(() => {
-        filterRows();
-    }, [filterValue]);
-    useEffect(() => {
-        filterRows();
-    }, [filterValue, rows]);
-    React.useEffect(() => {
-        axios.get('http://192.168.1.155:3000/customer-profiles/reference')
-            .then((secondResponse) => {
-                const dataWithUniqueIds = secondResponse.data.map((item, index) => ({
-                    ...item,
-                    id: index + 1,
-                }));
-                setSelectedCountry(dataWithUniqueIds)
-            })
-            .catch((secondError) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
-            });
+            }
+        };
 
-
-
-        axios.get('http://192.168.1.155:3000/customer-profiles/province')
-            .then((secondResponse) => {
-                const dataWithUniqueIds = secondResponse.data.map((item, index) => ({
-                    ...item,
-                    id: index + 1,
-                }));
-                setSelectedState(dataWithUniqueIds)
-            })
-            .catch((secondError) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
-            });
-
-
-
-        axios.get('http://192.168.1.155:3000/customer-profiles/District')
-            .then((secondResponse) => {
-                const dataWithUniqueIds1 = secondResponse.data.map((item, index) => ({
-                    ...item,
-                    id: index + 1,
-                }));
-                setSelectedTown(dataWithUniqueIds1)
-            })
-            .catch((secondError) => {
-                console.error('เกิดข้อผิดพลาดในการดึงข้อมูลจาก URL ที่สอง:', secondError);
-            });
-
-
-    }, []);
-
+        fetchData();
+    }, [rows]);
 
     const stylesx = {
         backgroundColor: "white",
         color: "white",
-        // Add other styles you need
+
     };
     const handleFilterChange = (searchValue, selectValue, statusValue) => {
         setFilterValue(searchValue);
         setSelectValue(selectValue);
-        setStatusValue(statusValue);
+        // setStatusValue(statusValue); 
     };
+
+
     const filterRows = () => {
         // กรองข้อมูลแถวตามค่าตัวกรองและค่า Select และค่า Status
         const filtered = rows.filter((row) => {
@@ -210,28 +214,24 @@ export default function DataGridDemo() {
                 (row.state &&
                     row.state.toLowerCase().includes(filterValue.toLowerCase()));
 
-            const typeMatches =
-                !selectValue || // ถ้าไม่ได้เลือก selectValue
-                (row.typabsent &&
-                    row.typabsent.toLowerCase() === selectValue.toLowerCase());
 
-            const statusMatches =
-                !statusValue || // ถ้าไม่ได้เลือก statusValue
-                (row.name && row.name.toLowerCase() === statusValue.toLowerCase());
 
-            return nameMatches && typeMatches && statusMatches;
+            return nameMatches
         });
 
-        setFilteredRows(filtered); // อัปเดตข้อมูลแถวที่ถูกกรอง
+        setFilteredRows(filtered);
+        setTest(filtered);
     };
+
+
+
     const handleCloseEditDialog = () => {
         setOpenEditDialog(false);
     };
-
-
-
     const uniqueTownOptions = Array.from(new Set(selectedTown.map(item => item.param_desc)))
         .map(param_desc => selectedTown.find(item => item.param_desc === param_desc));
+
+
     const columns = [
         { field: 'client', headerName: 'client', width: 90 },
         {
@@ -253,13 +253,7 @@ export default function DataGridDemo() {
             width: 200,
 
         },
-        {
-            field: 'building',
-            headerName: 'building',
 
-            width: 180,
-
-        },
         {
             field: 'town',
             headerName: 'town',
@@ -298,7 +292,7 @@ export default function DataGridDemo() {
         {
             field: '',
             headerName: 'button',
-            width: 300,
+            width: 250,
             renderCell: (params) => {
                 const handleEditClick = () => {
                     setEditRowData(params.row);
@@ -320,6 +314,7 @@ export default function DataGridDemo() {
                         </Button>
 
                         <Button
+
                             variant="contained"
                             size="small"
                             endIcon={<DeleteIcon />}
@@ -338,6 +333,22 @@ export default function DataGridDemo() {
 
 
     ];
+
+
+    const handleCustomerCodeChange = useCallback((e) => {
+        setEditRowData((prevData) => ({
+            ...prevData,
+            customer: e.target.value,
+        }));
+    }, []);
+
+    const handleTaxNumberChange = useCallback((e) => {
+        setEditRowData((prevData) => ({
+            ...prevData,
+            tax_no: e.target.value,
+        }));
+    }, []);
+
     return (
         <div>
             <Box sx={{ display: 'flex', justifyContent: 'start' }}>
@@ -357,7 +368,10 @@ export default function DataGridDemo() {
                     <DataGrid
                         sx={{ height: '85vh', padding: 4, paddingLeft: 8 }}
                         rows={filteredRows}
-                        columns={columns} pageSizeOptions={[5, 10, 25, 50, 100]}
+                        columns={columns}
+                        className="custom-datagrid"
+
+                        pageSizeOptions={[5, 10, 25, 50, 100]}
                         initialState={{
                             pagination: {
                                 paginationModel: {
@@ -446,6 +460,7 @@ export default function DataGridDemo() {
                                         }}
                                         disabled
                                         value={clientNames.find((option) => option.value === editRowData.client) || ''}
+                                        isOptionEqualToValue={(option, value) => option.value === value.value}
                                         onChange={(_, newValue) => {
                                             if (newValue) {
                                                 setEditRowData((prevData) => ({
@@ -491,16 +506,9 @@ export default function DataGridDemo() {
                                         // onChange={(e) => {
                                         //     setFormData({ ...editRowData, customer: e.target.value });
                                         // }}
-                                        onChange={(e) => {
-
-                                            setEditRowData((prevData) => ({
-                                                ...prevData,
-                                                customer: e.target.value,
-                                            }));
-                                        }}
+                                        onChange={handleCustomerCodeChange}
                                         multiline
                                         disabled
-                                    //size="small"
                                     />
                                 </Box>
 
@@ -523,13 +531,7 @@ export default function DataGridDemo() {
                                         placeholder="Tax Number"
                                         value={editRowData.tax_no || ''}
 
-                                        onChange={(e) => {
-
-                                            setEditRowData((prevData) => ({
-                                                ...prevData,
-                                                tax_no: e.target.value,
-                                            }));
-                                        }}
+                                        onChange={handleTaxNumberChange}
 
                                         multiline
                                     />
@@ -538,10 +540,8 @@ export default function DataGridDemo() {
                             <Box
                                 sx={{
                                     display: "grid",
-
                                     gap: 5,
                                     padding: 2,
-                                    // width: 1000
                                 }}
                             >
                                 <Box
@@ -599,7 +599,7 @@ export default function DataGridDemo() {
                                     multiline
                                     rows={4}
                                     value={editRowData.street}
-                                    onChange={(e) => setEditRowData({ ...editRowData, street: e.target.value })}
+                                    onInput={(e) => setEditRowData({ ...editRowData, street: e.target.value })}
                                 />
                             </Box>
                             <Box

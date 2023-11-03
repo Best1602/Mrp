@@ -5,8 +5,9 @@ import DrawerAppBar from "./Component/DrawerAppBar";
 import Routes from "./routes/routes";
 import { ThemeProvider } from '@mui/material/styles'; // Import ThemeProvider
 import { createTheme } from '@mui/material/styles';
+import { Box } from "@mui/material";
 function App() {
-  const [count, setCount] = useState(0);
+
   const theme = createTheme({
     typography: {
       fontFamily: 'IBM Plex Sans Thai, sans-serif',
@@ -17,15 +18,16 @@ function App() {
         medium: 500,
         bold: 700,
 
+
       },
+      // 
+
 
     },
   });
 
-
-
   return (
-    <div style={{ backgroundColor: '#F7FAFF', width: "100vw", height: "100vh" }}>
+    <Box style={{ backgroundColor: '#F7FAFF', width: "100vw", height: "100vh" }}>
       <BrowserRouter>
         <ThemeProvider theme={theme} >
           <DrawerAppBar />
@@ -40,7 +42,7 @@ function App() {
         </Routes> */}
         </ThemeProvider>
       </BrowserRouter>
-    </div>
+    </Box>
   );
 }
 

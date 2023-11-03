@@ -5,6 +5,9 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Mandatory from "./Mandatory";
+import Advance from "./Advance";
+import Advance2 from "./Advance2";
+import SupplierSku from "./SupplierSku";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -66,7 +69,13 @@ export default function TabProduct() {
                 <Mandatory />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                {/* <BoxClient /> */}
+                <Advance />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+                <Advance2 />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+                <SupplierSku />
             </CustomTabPanel>
 
         </Box>

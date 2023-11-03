@@ -19,12 +19,8 @@ import DetailPo from "./DetailPo";
 function HeaderPo() {
     return (
         <Box>
-
-
             <InputLabel sx={{ fontSize: '28px', marginTop: '1rem', color: '#003864', fontWeight: 600 }}>HEADER</InputLabel>
-            <>
-                <br />
-            </>
+
             <Paper
                 elevation={3}
                 sx={{
@@ -49,8 +45,9 @@ function HeaderPo() {
                             height: "50px",
                             borderRadius: '7px'
                         }}
+                        value={"001"}
                     >
-                        <MenuItem value={"บริษัท กกกกกกกก จำกัด"}>
+                        <MenuItem value={"001"}>
                             บริษัท กกกกกกกก จำกัด
                         </MenuItem>
                         <MenuItem value={"บริษัท ขขขขขขขข จำกัด"}>
@@ -68,8 +65,7 @@ function HeaderPo() {
                                     borderRadius: '7px',
                                     height: '55px'
                                 },
-                                // ปรับความสูงตามที่คุณต้องการ
-                                // สามารถปรับแต่งค่าความสูงเพิ่มเติมตามต้องการ
+
                             }}
                             label="Po Date"
                             format="DD/MM/YYYY"
@@ -91,6 +87,7 @@ function HeaderPo() {
                             height: "50px",
                             borderRadius: '7px'
                         }}
+                        value={"001"}
                     >
                         <MenuItem value={"001"}>001</MenuItem>
                         <MenuItem value={"002"}>002</MenuItem>
@@ -111,7 +108,9 @@ function HeaderPo() {
                             width: "100%",
                             height: "50px",
                             borderRadius: '7px'
+
                         }}
+                        value={"001"}
                     >
                         <MenuItem value={"001"}>คืออะไรผมไม่รู้</MenuItem>
                         <MenuItem value={"002"}>คืออะไรผมไม่รู้</MenuItem>
@@ -146,6 +145,7 @@ function HeaderPo() {
                                     height: "50px",
                                     borderRadius: '7px'
                                 }}
+                                value={"001"}
                             >
                                 <MenuItem value={"001"}>001</MenuItem>
                                 <MenuItem value={"002"}>002</MenuItem>
@@ -159,6 +159,7 @@ function HeaderPo() {
                                     height: "50px",
                                     borderRadius: '7px'
                                 }}
+                                value={"001"}
                             >
                                 <MenuItem value={"001"}>001</MenuItem>
                                 <MenuItem value={"002"}>002</MenuItem>
@@ -185,6 +186,7 @@ function HeaderPo() {
                                     height: "50px",
                                     borderRadius: '7px'
                                 }}
+                                value={"001"}
                             >
                                 <MenuItem value={"001"}>บาท</MenuItem>
                                 <MenuItem value={"002"}>บาทบาท</MenuItem>
@@ -197,6 +199,7 @@ function HeaderPo() {
                                     height: "50px",
                                     borderRadius: '7px'
                                 }}
+                                value={"001"}
                             >
                                 <MenuItem value={"001"}>คืออะไรผมไม่รู้</MenuItem>
                             </Select>
@@ -399,7 +402,7 @@ function HeaderPo() {
                             mr: 2, width: "32%", '& .MuiOutlinedInput-notchedOutline': {
                                 borderRadius: '7px',
                             },
-                        }} // ระยะห่างด้านล่าง 2 หน่วย
+                        }}
                     />
                     <TextField
                         id="outlined-textarea"
@@ -410,7 +413,7 @@ function HeaderPo() {
                             mr: 2, width: "32%", '& .MuiOutlinedInput-notchedOutline': {
                                 borderRadius: '7px',
                             },
-                        }} // ระยะห่างด้านล่าง 2 หน่วย
+                        }}
                     />
                     <TextField
                         id="outlined-textarea"
@@ -421,12 +424,12 @@ function HeaderPo() {
                             mr: 2, width: "32%", '& .MuiOutlinedInput-notchedOutline': {
                                 borderRadius: '7px',
                             },
-                        }} // ระยะห่างด้านล่าง 2 หน่วย
+                        }}
                     />
                 </Box>
             </Paper>
             <Box sx={{ marginTop: 2 }}>
-                {" "}
+
                 <DetailPo />
             </Box>
         </Box>

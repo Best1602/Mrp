@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TablePolist from "./TablePolist";
 import HeaderPo from "./HeaderPo";
-import DetailPo from "./DetailPo";
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -58,7 +57,6 @@ export default function BasicTabs() {
                     <Tab label="Po List" {...a11yProps(0)} />
                     <Tab label="Header" {...a11yProps(1)} />
 
-                    {/* <Tab label="Detail" {...a11yProps(2)} /> */}
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -67,9 +65,7 @@ export default function BasicTabs() {
             <CustomTabPanel value={value} index={1}>
                 <HeaderPo />
             </CustomTabPanel>
-            {/* <CustomTabPanel value={value} index={2}>
-                <DetailPo />
-            </CustomTabPanel> */}
+
         </Box>
     );
 }

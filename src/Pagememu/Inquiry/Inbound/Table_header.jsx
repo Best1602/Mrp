@@ -10,14 +10,14 @@ const columns = [
         headerName: "Order_No",
         width: 150,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "reference_no",
         headerName: "Reference No",
         width: 150,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "invoice",
@@ -25,7 +25,7 @@ const columns = [
         type: "number",
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "status",
@@ -33,7 +33,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "create_date",
@@ -41,7 +41,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "supplier",
@@ -49,7 +49,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "supplier_Name",
@@ -57,7 +57,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "shipment_no",
@@ -65,7 +65,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "payment_term",
@@ -73,7 +73,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "vat",
@@ -81,7 +81,7 @@ const columns = [
         type: "number",
         width: 50,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "discount",
@@ -89,7 +89,7 @@ const columns = [
         type: "number",
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "discount_type",
@@ -97,7 +97,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "order_type",
@@ -105,7 +105,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "request By",
@@ -113,7 +113,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "street",
@@ -121,7 +121,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "bldg",
@@ -129,7 +129,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "town",
@@ -137,7 +137,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "country",
@@ -145,7 +145,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "postcode",
@@ -153,7 +153,7 @@ const columns = [
         type: "number",
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "contact",
@@ -161,7 +161,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "maker",
@@ -169,7 +169,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "last_receipt",
@@ -177,7 +177,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "received_by",
@@ -185,7 +185,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "update_by",
@@ -193,7 +193,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "last_update",
@@ -201,7 +201,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "remarks",
@@ -209,7 +209,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
     {
         field: "req_delivery",
@@ -217,7 +217,7 @@ const columns = [
 
         width: 110,
 
-        resizable: true,
+        // resizable: true,
     },
 
 ];

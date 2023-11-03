@@ -23,7 +23,6 @@ import { useMediaQuery } from "@mui/material";
 
 
 
-
 function Mandatory() {
 
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -67,52 +66,58 @@ function Mandatory() {
                             gap: "16px",
 
                         }}
-                    >
-                        <InputLabel sx={{
-                            // fontSize: '28px',
-                            marginTop: '1rem',
-                            color: '#003864',
-                            fontWeight: 600,
-                            fontSize: isSmallScreen ? "10px" : "20px",
-                        }}>Mandatory Product Definition</InputLabel>
+                    > <InputLabel sx={{
+                        // fontSize: '28px',
+                        marginTop: '1rem',
+                        color: '#003864',
+                        fontWeight: 600,
+                        fontSize: isSmallScreen ? "10px" : "20px",
+                    }}>Mandatory Product Definition</InputLabel>
                         <InputLabel>Product Class</InputLabel>
-                        <Select
-                            sx={{
-                                width: "100%",
-                                height: "55px",
-                                borderRadius: '7px',
-                                "@media (min-width: 768px)": {
-                                    flexDirection: "row",
-                                },
-                            }}
-                            defaultValue={"001"}
-                        >
-                            <MenuItem value={"001"}>
-                                ASSEMBLY
-                            </MenuItem>
-                            <MenuItem value={"002"}>
-                                COMPONENT
-                            </MenuItem>
-                            <MenuItem value={"บริษัท นนนนนนน จำกัด"}>
-                                บริษัท คคคคคคคค จำกัด
-                            </MenuItem>
-                        </Select>
+                        <FormControl fullWidth>
+
+
+                            <Select
+                                sx={{
+                                    width: "100%",
+                                    height: "55px",
+                                    borderRadius: '7px',
+                                    "@media (min-width: 768px)": {
+                                        flexDirection: "row",
+                                    },
+                                }}
+                                defaultValue={"001"}
+                            >
+                                <MenuItem value={"001"}>
+                                    ASSEMBLY
+                                </MenuItem>
+                                <MenuItem value={"002"}>
+                                    COMPONENT
+                                </MenuItem>
+                                <MenuItem value={"บริษัท นนนนนนน จำกัด"}>
+                                    บริษัท คคคคคคคค จำกัด
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
 
                         <InputLabel>Gross Weight</InputLabel>
-                        <Select
-                            sx={{
-                                width: "100%",
-                                height: "55px",
-                                borderRadius: '7px',
-                                "@media (min-width: 768px)": {
-                                    flexDirection: "row",
-                                },
-                            }}
-                        >
-                            <MenuItem value={"001"}>001</MenuItem>
-                            <MenuItem value={"002"}>002</MenuItem>
-                            <MenuItem value={"003"}>003</MenuItem>
-                        </Select>
+                        <FormControl fullWidth>
+                            <Select
+                                sx={{
+                                    width: "100%",
+                                    height: "55px",
+                                    borderRadius: '7px',
+                                    "@media (min-width: 768px)": {
+                                        flexDirection: "row",
+                                    },
+                                }}
+                            >
+                                <MenuItem value={"001"}>001</MenuItem>
+                                <MenuItem value={"002"}>002</MenuItem>
+                                <MenuItem value={"003"}>003</MenuItem>
+                            </Select>
+                        </FormControl>
+
                         <InputLabel>Net Weight (Unit)</InputLabel>
                         <TextField
 
@@ -177,30 +182,35 @@ function Mandatory() {
                         }}
                     >
                         <InputLabel>Alternate Code</InputLabel>
-                        <Select
-                            sx={{
-                                width: "100%",
-                                height: "55px",
-                                borderRadius: '7px',
+                        <FormControl fullWidth>
+                            <Select
+                                sx={{
+                                    width: "100%",
+                                    height: "55px",
+                                    borderRadius: '7px',
 
-                            }}
-                        >
-                            <MenuItem value={"001"}>001</MenuItem>
-                            <MenuItem value={"002"}>002</MenuItem>
-                            <MenuItem value={"003"}>003</MenuItem>
-                        </Select>
+                                }}
+                            >
+                                <MenuItem value={"001"}>001</MenuItem>
+                                <MenuItem value={"002"}>002</MenuItem>
+                                <MenuItem value={"003"}>003</MenuItem>
+                            </Select>
+                        </FormControl>
+
                         <InputLabel>Category</InputLabel>
-                        <Select
-                            sx={{
-                                width: "100%",
-                                height: "55px",
-                                borderRadius: '7px'
-                            }}
-                        >
-                            <MenuItem value={"001"}>001</MenuItem>
-                            <MenuItem value={"002"}>002</MenuItem>
-                            <MenuItem value={"003"}>003</MenuItem>
-                        </Select>
+                        <FormControl fullWidth>
+                            <Select
+                                sx={{
+                                    width: "100%",
+                                    height: "55px",
+                                    borderRadius: '7px',
+                                }}
+                            >
+                                <MenuItem value={"001"}>001</MenuItem>
+                                <MenuItem value={"002"}>002</MenuItem>
+                                <MenuItem value={"003"}>003</MenuItem>
+                            </Select>
+                        </FormControl>
                         <InputLabel>Nesting Factor</InputLabel>
                         <TextField
 

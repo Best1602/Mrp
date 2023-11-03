@@ -14,7 +14,7 @@ function HeaderOrdersQuery() {
 
     return (
         <Box>
-            {<Box
+            <Box
                 sx={{
                     display: "flex",
                     justifyContent: "start",
@@ -23,8 +23,17 @@ function HeaderOrdersQuery() {
                 }}
             >
 
-                <InputLabel sx={{ fontSize: '28px', marginTop: '1rem', color: '#003864', fontWeight: 600 }}>HEADER</InputLabel>
-            </Box>}
+                <InputLabel
+                    sx={{
+                        fontSize: '28px',
+                        marginTop: '1rem',
+                        color: '#003864',
+                        fontWeight: 600,
+                    }}>
+                    HEADER
+                </InputLabel>
+            </Box>
+
             <Paper
                 elevation={3}
                 sx={{
@@ -32,7 +41,7 @@ function HeaderOrdersQuery() {
                     flexDirection: "row",
                     gap: "16px",
                     padding: 3,
-                    // paddingRight: '200px',
+
                     marginRight: '40px'
                 }}
             >
@@ -51,16 +60,11 @@ function HeaderOrdersQuery() {
                             height: "57px",
                             borderRadius: '7px'
                         }}
+                        value={"001"} // Set the initial value here
                     >
-                        <MenuItem value={"001"}>
-                            001
-                        </MenuItem>
-                        <MenuItem value={"002"}>
-                            002
-                        </MenuItem>
-                        <MenuItem value={"003"}>
-                            003
-                        </MenuItem>
+                        <MenuItem value={"001"}>001</MenuItem>
+                        <MenuItem value={"002"}>002</MenuItem>
+                        <MenuItem value={"003"}>003</MenuItem>
                     </Select>
 
 
@@ -83,8 +87,9 @@ function HeaderOrdersQuery() {
                             height: "57px",
                             borderRadius: '7px'
                         }}
+                        value={'001'}
                     >
-                        <MenuItem value={"บริษัท กกกกกกกก จำกัด"}>
+                        <MenuItem value={"001"}>
                             บริษัท กกกกกกกก จำกัด
                         </MenuItem>
                         <MenuItem value={"บริษัท ขขขขขขขข จำกัด"}>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -14,115 +14,181 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
-
-
-
-function Row(props) {
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
-
-    return (
-        <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => setOpen(!open)}
-                    >
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.Client}
-                </TableCell>
-                <TableCell align="start">{row["Client Name"]}</TableCell>
-                <TableCell align="start">{row["Address"]}</TableCell>
-                <TableCell align="start">{row.District}</TableCell>
-                <TableCell align="start">{row.Province}</TableCell>
-                <TableCell align="start">{row.Country}</TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 3 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                Details
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell> </TableCell>
-                                        <TableCell> </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {Object.keys(row).map((key) => (
-                                        <TableRow key={key}>
-                                            <TableCell sx={{ width: '300px' }} align="start" component="th" scope="row">
-                                                {key}
-                                            </TableCell>
-                                            <TableCell>{row[key]}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </Box>
-                    </Collapse>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
-}
-
-Row.propTypes = {
-    row: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        carbs: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        history: PropTypes.arrayOf(
-            PropTypes.shape({
-                amount: PropTypes.number.isRequired,
-                customerId: PropTypes.string.isRequired,
-                date: PropTypes.string.isRequired,
-            }),
-        ).isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        protein: PropTypes.number.isRequired,
-    }).isRequired,
-};
+import { DataGrid } from '@mui/x-data-grid';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button } from '@mui/material';
 
 export default function CollapsibleTable() {
     const [rows, setRows] = React.useState([]);
+    const [selectedCountry, setSelectedCountry] = React.useState([]);
 
-    React.useEffect(() => {
-        // ดึงข้อมูลจาก API และกำหนดให้ rows เป็นข้อมูลที่ได้รับ
-        axios.get(`http://192.168.1.155:3000/clientprofile/getclientprofiles`).then((response) => {
-            setRows(response.data);
-        });
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 90 },
+        {
+            field: 'client',
+            headerName: 'Client',
+            width: 150,
+
+
+
+        },
+        {
+            field: 'client_name',
+            headerName: 'Client_name',
+
+            width: 200,
+
+        },
+        {
+            field: 'country',
+            headerName: 'Country',
+            type: 'text',
+            width: 200,
+
+        },
+        {
+            field: 'street',
+            headerName: 'street',
+            type: 'text',
+            width: 200,
+
+        },
+        {
+            field: 'town',
+            headerName: 'town',
+            type: 'text',
+            width: 200,
+
+        },
+        {
+            field: 'state',
+            headerName: 'state',
+            type: 'text',
+            width: 200,
+
+        },
+        {
+            field: 'phone',
+            headerName: 'phone',
+            type: 'text',
+            width: 200,
+
+        },
+        {
+            field: '',
+            headerName: 'button',
+            width: 250,
+            renderCell: (params) => {
+                const handleEditClick = () => {
+                    setEditRowData(params.row);
+                    setOpenEditDialog(true);
+                };
+
+                return (
+
+                    <Box sx={{ display: 'flex', justifyContent: 'start' }}>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            endIcon={<ModeEditIcon />}
+                            size="small"
+                            onClick={handleEditClick}
+                            sx={{ margin: '5px' }} // ระยะห่างระหว่างปุ่ม Edit กับปุ่ม ADD
+                        >
+                            Edit
+                        </Button>
+
+                        <Button
+                            onClick={handleDelete}
+                            variant="contained"
+                            size="small"
+                            endIcon={<DeleteIcon />}
+                            sx={{ backgroundColor: '#e53935', margin: '5px' }} // ระยะห่างระหว่างปุ่ม DELETE กับปุ่มอื่น
+                        >
+                            DELETE
+                        </Button>
+                    </Box>
+
+
+
+                );
+            },
+        },
+    ];
+
+
+
+
+
+
+    useEffect(() => {
+        axios
+            .get('http://192.168.1.155:3000/clientprofile/getclientprofiles')
+            .then((response) => {
+                // Map the response data to add unique IDs to each row
+                const rowsWithUniqueIds = response.data.map((row, index) => ({
+                    ...row,
+                    id: index + 1,
+                }));
+                setRows(rowsWithUniqueIds); // Store the fetched data with unique IDs in the state
+
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+
+            });
     }, []);
 
+
+    const handleDelete = () => {
+
+        axios
+            .delete(
+                // "http://192.168.1.155:3000/customer-profiles/insupd_customer_master",
+                {
+
+
+                }
+            )
+            .then((response) => {
+
+                console.log(response);
+                setOpenEditDialog(false);
+            })
+            .catch((error) => {
+
+                if (error.response) {
+                    console.log("API Response Data:", error.response.data); // เพื่อดูข้อมูลข้อผิดพลาดจากเซิร์ฟเวอร์
+                }
+            });
+    };
+
     return (
-        <TableContainer component={Paper} elevation={6} sx={{ width: '91.5vw', mt: 3 }}>
-            <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell />
-                        <TableCell>Cilent</TableCell>
-                        <TableCell align="start">Cilent Name</TableCell>
-                        <TableCell align="start">Address&nbsp;</TableCell>
-                        <TableCell align="start">District&nbsp;</TableCell>
-                        <TableCell align="start">Province&nbsp;</TableCell>
-                        <TableCell align="start">Country&nbsp;</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row, index) => (
-                        <Row key={index} row={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Box sx={{ height: '100%', width: '100%' }}>
+
+            <Paper elevation={12} sx={{ mt: 3, width: "91.5vw", height: '85vh', }}>
+
+                <div style={{ height: "100%", width: '100%' }}>
+                    <DataGrid
+                        sx={{ height: '85vh', padding: 4, paddingLeft: 8 }}
+                        rows={rows}
+                        columns={columns}
+                        className="custom-datagrid"
+
+                        pageSizeOptions={[5, 10, 25, 50, 100]}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 10,
+
+                                },
+                            },
+                        }}
+                    />
+                </div>
+            </Paper>
+        </Box>
     );
 }
